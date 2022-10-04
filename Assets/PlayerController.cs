@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] float thrustMod = 1000f;
+    [SerializeField] float rotationalMod = 100f;
+
+    Rigidbody rb;
+    Transform tr;
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        tr = GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -19,15 +25,23 @@ public class PlayerController : MonoBehaviour
 
     void ProcessThrust() {
         if(Input.GetKey(KeyCode.Space)) {
-            Debug.Log("Pressed SPACE");
+            rb.AddRelativeForce(Vector3.up*thrustMod*Time.deltaTime);
         }
     }
     void ProcessRotation() {
-        if(Input.GetKey(KeyCode.D)) {
-            Debug.Log("Rotate Clockwise");
+        if(Input.GetKey(KeyCode.D))
+        {
+            ApplyRotation(Vector3.back);
         }
         else if(Input.GetKey(KeyCode.A)) {
-            Debug.Log("Rotate CounterClockwise");
+            ApplyRotation(Vector3.forward);
         }
+    }
+
+    void ApplyRotation(Vector3 direction)
+    {
+        rb.freezeRotation = true; //freeze rotation for manual control
+        tr.Rotate(direction * rotationalMod * Time.deltaTime);
+        rb.freezeRotation = false; //allowing physics to regain control
     }
 }
