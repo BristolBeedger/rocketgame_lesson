@@ -293,7 +293,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.49, y: 9.19, z: -30.2}
+  m_LocalPosition: {x: -35.8, y: 5.41, z: -21.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -316,11 +316,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8163022930308067336, guid: 3de26457ee00a0a429856cfcf2dcf19f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.23
+      value: -36.03
       objectReference: {fileID: 0}
     - target: {fileID: 8163022930308067336, guid: 3de26457ee00a0a429856cfcf2dcf19f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.98
+      value: 2.51
       objectReference: {fileID: 0}
     - target: {fileID: 8163022930308067336, guid: 3de26457ee00a0a429856cfcf2dcf19f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -423,6 +423,10 @@ PrefabInstance:
     - target: {fileID: 2948633405568024208, guid: 75325c1380a67b54e905eef5d3d96315, type: 3}
       propertyPath: m_Name
       value: LaunchPad
+      objectReference: {fileID: 0}
+    - target: {fileID: 2948633405568024208, guid: 75325c1380a67b54e905eef5d3d96315, type: 3}
+      propertyPath: m_TagString
+      value: Friendly
       objectReference: {fileID: 0}
     - target: {fileID: 5807497859268954279, guid: 75325c1380a67b54e905eef5d3d96315, type: 3}
       propertyPath: m_RootOrder
@@ -540,7 +544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 680327444415138132, guid: a86206cdf822663408b8697c6de2b4c4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 46
+      value: -25.93
       objectReference: {fileID: 0}
     - target: {fileID: 680327444415138132, guid: a86206cdf822663408b8697c6de2b4c4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -581,6 +585,10 @@ PrefabInstance:
     - target: {fileID: 5551257166427253757, guid: a86206cdf822663408b8697c6de2b4c4, type: 3}
       propertyPath: m_Name
       value: LandingPad
+      objectReference: {fileID: 0}
+    - target: {fileID: 5551257166427253757, guid: a86206cdf822663408b8697c6de2b4c4, type: 3}
+      propertyPath: m_TagString
+      value: Finish
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a86206cdf822663408b8697c6de2b4c4, type: 3}
