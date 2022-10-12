@@ -59,10 +59,16 @@ public class PlayerController : MonoBehaviour
         {
             RightThrusterLogic();
         }
-        else {
-            leftThrustParticles.Stop();
-            rightThrustParticles.Stop();
+        else
+        {
+            EndRotationalLogic();
         }
+    }
+
+    private void EndRotationalLogic()
+    {
+        leftThrustParticles.Stop();
+        rightThrustParticles.Stop();
     }
 
     private void RightThrusterLogic()

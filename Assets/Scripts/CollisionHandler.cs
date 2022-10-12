@@ -8,10 +8,16 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float delay = 1.25f;
     [SerializeField] AudioClip crashClip;
     [SerializeField] AudioClip finishClip;
+    [SerializeField] ParticleSystem crashParticles;
+    [SerializeField] ParticleSystem finishParticles;
+
     Scene activeLevel;
     int activeLevelIndex;
     PlayerController pc;
     AudioSource collisionAudio;
+
+    bool hasCollided = false;
+    bool isCollisionDisabled = false;
 
     void Start() {
         activeLevel = SceneManager.GetActiveScene();
@@ -20,9 +26,31 @@ public class CollisionHandler : MonoBehaviour
         collisionAudio = GetComponent<AudioSource>();
     }
 
+    void Update() {
+        NextLevelLoad_DebugTool();
+        DisableCollisions_DebugTool();
+        Debug.Log(isCollisionDisabled);
+    }
+
+    private void DisableCollisions_DebugTool()
+    {
+        if(Input.GetKeyDown(KeyCode.C)) {
+            isCollisionDisabled = !isCollisionDisabled;
+        }
+    }
+
+    private void NextLevelLoad_DebugTool()
+    {
+        if(Input.GetKeyDown(KeyCode.L)) {
+            UpdateLevelIndex(activeLevel.buildIndex+1);
+            LoadLevel();
+        }
+    }
+
     void OnCollisionEnter(Collision other) {
-        switch (other.gameObject.tag)
-        {
+        if(!hasCollided && !isCollisionDisabled) {
+            switch (other.gameObject.tag)
+            {
             case "Finish":
                 UpdateLevelIndex(activeLevel.buildIndex+1);
                 StartFinishSequence();
@@ -34,22 +62,28 @@ public class CollisionHandler : MonoBehaviour
                 UpdateLevelIndex(activeLevel.buildIndex);
                 StartCrashSequence();
                 break;
+            }
         }
     }
 
     void StartFinishSequence()
     {
+        hasCollided = true;
+        collisionAudio.Stop();
         collisionAudio.PlayOneShot(finishClip);
+        finishParticles.Play();
         pc.enabled = false;
         Invoke("LoadLevel", delay);
     }
 
     void StartCrashSequence() {
         /* TODO
-        ** add crash sfx
         ** add particle effect    
         */
+        hasCollided = true;
+        collisionAudio.Stop();
         collisionAudio.PlayOneShot(crashClip);
+        crashParticles.Play();
         pc.enabled = false;
         Invoke("LoadLevel", delay);
     }
