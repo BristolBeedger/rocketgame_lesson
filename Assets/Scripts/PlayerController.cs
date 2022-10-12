@@ -5,10 +5,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float thrustMod = 1000f;
     [SerializeField] float rotationalMod = 100f;
     [SerializeField] AudioClip engineClip;
+    [SerializeField] ParticleSystem centerThrustParticles;
+    [SerializeField] ParticleSystem leftThrustParticles;
+    [SerializeField] ParticleSystem rightThrustParticles;
 
     Rigidbody rb;
     Transform tr;
     AudioSource thrustAudio;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,19 +29,52 @@ public class PlayerController : MonoBehaviour
     }
 
     void ProcessThrust() {
-        if(Input.GetKey(KeyCode.Space)) {
-            rb.AddRelativeForce(Vector3.up*thrustMod*Time.deltaTime);
-            if(!thrustAudio.isPlaying)
-                thrustAudio.PlayOneShot(engineClip);
+        if(Input.GetKey(KeyCode.Space))
+        {
+            CenterThrusterLogic();
         }
-        else
+        else {
             thrustAudio.Stop();
+            centerThrustParticles.Stop();
+        }  
     }
+
+    void CenterThrusterLogic()
+    {
+        rb.AddRelativeForce(Vector3.up * thrustMod * Time.deltaTime);
+        if (!thrustAudio.isPlaying)
+        {
+            thrustAudio.PlayOneShot(engineClip);
+        }
+        if (!centerThrustParticles.isPlaying)
+            centerThrustParticles.Play();
+    }
+
     void ProcessRotation() {
         if(Input.GetKey(KeyCode.D))
-            ApplyRotation(Vector3.back);
+        {
+            LeftThrusterLogic();
+        }
         else if(Input.GetKey(KeyCode.A))
-            ApplyRotation(Vector3.forward);
+        {
+            RightThrusterLogic();
+        }
+        else {
+            leftThrustParticles.Stop();
+            rightThrustParticles.Stop();
+        }
+    }
+
+    private void RightThrusterLogic()
+    {
+        ApplyRotation(Vector3.forward);
+        if (!rightThrustParticles.isPlaying) rightThrustParticles.Play();
+    }
+
+    private void LeftThrusterLogic()
+    {
+        ApplyRotation(Vector3.back);
+        if (!leftThrustParticles.isPlaying) leftThrustParticles.Play();
     }
 
     void ApplyRotation(Vector3 direction)
