@@ -1,17 +1,23 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System;
 
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField] float delay = 1.25f;
+    [SerializeField] AudioClip crashClip;
+    [SerializeField] AudioClip finishClip;
     Scene activeLevel;
     int activeLevelIndex;
     PlayerController pc;
+    AudioSource collisionAudio;
 
     void Start() {
         activeLevel = SceneManager.GetActiveScene();
         activeLevelIndex = activeLevel.buildIndex;
         pc = GetComponent<PlayerController>();
+        collisionAudio = GetComponent<AudioSource>();
     }
 
     void OnCollisionEnter(Collision other) {
@@ -19,23 +25,37 @@ public class CollisionHandler : MonoBehaviour
         {
             case "Finish":
                 UpdateLevelIndex(activeLevel.buildIndex+1);
-                LoadLevel();
+                StartFinishSequence();
                 break;
             case "Friendly":
                 Debug.Log("Friend");
                 break;
-            case "Fuel":
-                Debug.Log("Fuel Added");
-                break;
             default:
-                UpdateLevelIndex(activeLevel.buildIndex+1);
-                //LoadLevel(activeLevel.buildIndex);
+                UpdateLevelIndex(activeLevel.buildIndex);
+                StartCrashSequence();
                 break;
         }
     }
 
-    void UpdateLevelIndex(int levelIndex) {
+    void StartFinishSequence()
+    {
+        collisionAudio.PlayOneShot(finishClip);
+        pc.enabled = false;
+        Invoke("LoadLevel", delay);
+    }
 
+    void StartCrashSequence() {
+        /* TODO
+        ** add crash sfx
+        ** add particle effect    
+        */
+        collisionAudio.PlayOneShot(crashClip);
+        pc.enabled = false;
+        Invoke("LoadLevel", delay);
+    }
+
+    void UpdateLevelIndex(int levelIndex) {
+        activeLevelIndex = levelIndex;
     }
 
     void LoadLevel() {
@@ -48,6 +68,5 @@ public class CollisionHandler : MonoBehaviour
             SceneManager.LoadScene(0);
             activeLevel = SceneManager.GetActiveScene();
         }
-        
     }
 }

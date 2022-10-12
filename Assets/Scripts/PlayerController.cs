@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float thrustMod = 1000f;
     [SerializeField] float rotationalMod = 100f;
+    [SerializeField] AudioClip engineClip;
 
     Rigidbody rb;
     Transform tr;
@@ -29,7 +28,7 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKey(KeyCode.Space)) {
             rb.AddRelativeForce(Vector3.up*thrustMod*Time.deltaTime);
             if(!thrustAudio.isPlaying)
-                thrustAudio.Play();
+                thrustAudio.PlayOneShot(engineClip);
         }
         else
             thrustAudio.Stop();
