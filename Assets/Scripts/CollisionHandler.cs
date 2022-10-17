@@ -29,7 +29,6 @@ public class CollisionHandler : MonoBehaviour
     void Update() {
         NextLevelLoad_DebugTool();
         DisableCollisions_DebugTool();
-        Debug.Log(isCollisionDisabled);
     }
 
     private void DisableCollisions_DebugTool()
@@ -56,7 +55,6 @@ public class CollisionHandler : MonoBehaviour
                 StartFinishSequence();
                 break;
             case "Friendly":
-                Debug.Log("Friend");
                 break;
             default:
                 UpdateLevelIndex(activeLevel.buildIndex);
